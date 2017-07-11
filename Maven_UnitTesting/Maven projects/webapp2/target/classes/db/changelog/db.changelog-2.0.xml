@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+<changeSet id="victor-2.0" author="The Victor">
+    <createTable tableName="VictorAdress">
+        <column name="ADR_ID" type="number(6)">
+            <constraints primaryKey="true"></constraints>
+        </column>
+        <column name="STREET" type="varchar2(50 BYTE)"></column>
+        <column name="NO" type="number(6)"></column>
+        <column name="CITY" type="varchar2(30 BYTE)">
+            <constraints nullable="false"></constraints>
+        </column>
+
+
+    </createTable>
+</changeSet>
+    <changeSet id="victor-2.1" author="The Victor">
+        <addForeignKeyConstraint baseTableName="VictorPeoples"
+                                 baseColumnNames="ADRESS_ID"
+                                 constraintName="FK_ADDRESS_ID"
+                                 referencedTableName="VictorAdress"
+                                 referencedColumnNames="ADR_ID"></addForeignKeyConstraint>
+    </changeSet>
+
+</databaseChangeLog>
