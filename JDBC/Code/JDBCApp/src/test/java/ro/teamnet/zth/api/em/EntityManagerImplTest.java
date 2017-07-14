@@ -3,9 +3,12 @@ package ro.teamnet.zth.api.em;
 import org.junit.Assert;
 import org.junit.Test;
 import ro.teamnet.zth.appl.domain.Department;
+import ro.teamnet.zth.appl.domain.Employee;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -65,8 +68,52 @@ public class EntityManagerImplTest {
         EntityManagerImpl entityManager = new EntityManagerImpl();
         List<Department> departments = entityManager.findAll(Department.class);
 
-        assertEquals("List size should be 29",29,departments.size());
+        assertEquals("List size should be 28",28,departments.size());
     }
 
+    @Test
+    public void testUpdate() throws Exception {
+        EntityManagerImpl manager = new EntityManagerImpl();
+        Department d = new Department();
+        d.setDepartmentName("Steaua");
+        d.setId(160L);
+        d.setLocation((long)1700);
 
+        Department result = manager.update(d);
+        assertEquals("Department diferit","Steaua",result.getDepartmentName());
+
+
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        EntityManagerImpl manager = new EntityManagerImpl();
+        Department d = new Department();
+
+        d.setId(110L);
+        d.setLocation((long)1700);
+
+
+        manager.delete(d);
+
+
+    }
+
+    @Test
+    public void findByParamsTest() throws Exception {
+        EntityManagerImpl em = new EntityManagerImpl();
+        Map<String,Object> params = new HashMap<>();
+        params.put("Location_id",1700L);
+        params.put("Department_name","IT Support");
+        List<Department> result = em.findByParams(Department.class,params);
+
+        assertEquals(1,result.size());
+    }
+
+    @Test
+    public void findEmployeesTest() throws Exception {
+        EntityManagerImpl entityManager= new EntityManagerImpl();
+        List<Employee> result =entityManager.findEmployees("es");
+        assertEquals(35,result.size());
+    }
 }
